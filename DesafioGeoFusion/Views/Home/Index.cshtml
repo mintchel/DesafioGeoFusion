@@ -1,0 +1,27 @@
+﻿@model DesafioGeoFusion.Models.EmailModels
+@{
+    ViewBag.Title = "Lucky - Home Page";
+}
+<!DOCTYPE html>
+        <div class="content-wrapper">
+                <h1>Welcome to Lucky!</h1>
+            <p style="text-align:center">
+                Lucky was born of the desire to create statement accessories, differentiated and with a cool touch, but still really affordable! Lucky is genderless. Lucky is fun and innovative with accessories for many occasions. Our pieces are full of passion and style! <3
+In the end, our greatest motivation is to see our customers slaying out there - and of course, using amazing accessories!
+            </p>
+        </div>
+        <div class="showcase">
+            <img src="../../Images/product1.png" />
+            <img src="../../Images/product2.png" />
+            <img src="../../Images/product3.png" />
+        </div>
+        <div class="email-content-wrapper">
+            @using (Html.BeginForm())
+            {
+                <h5>Insert your e-mail below to get access to exclusive sneak peeks and previews.</h5>
+                <p> We'll contact you once the platform is out!</p>
+                @Html.TextBoxFor(x => x.Email);
+                <input type="submit" value="Subscribe" />
+                @Html.ValidationSummary();
+            }                  
+        </div>
