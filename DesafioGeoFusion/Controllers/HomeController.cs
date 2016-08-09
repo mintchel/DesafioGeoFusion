@@ -23,7 +23,6 @@ namespace DesafioGeoFusion.Controllers
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection cn = new SqlConnection(connectionString);
-            //SqlConnection cn = new SqlConnection(@"Data Source=.\SQLEXPRESS;AttachDbFilename=C:\Users\Michel\documents\visual studio 2010\Projects\DesafioGeoFusion\DesafioGeoFusion\App_Data\Database.mdf;Integrated Security=True;User Instance=True");
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
             
@@ -84,18 +83,18 @@ namespace DesafioGeoFusion.Controllers
                 mail.From = new MailAddress("Empresa@Teste");
                 mail.Subject = "Thank you for subscribing to Lucky's newsletter!";
                 mail.IsBodyHtml = true;
-                mail.Body = "<html><body><form action='"+url+"' method='post' target='_blank'><label>How did you like the movie <strong>Turfnuts</strong>?</label><br /><input name='Email' type='hidden' value='"+emailModels.Email+"' /><label for='Question1'>What do you expect from our company?</label><br /><textarea cols='75' name='Question1' rows='5'></textarea><br /><br /><label for='Question2'>How much would you pay for our services?</label><br /><textarea cols='75' name='Question2' rows='5'></textarea><br /><br /><label for='Question3'>What do you really need?</label><br /><textarea cols='75' name='Question3' rows='5'></textarea><br /><br /><input type='submit' value='Submit your survey.' />&nbsp;</form></body></html>";
+                mail.Body = "<html><body><form action='"+url+"' method='post' target='_blank'><p>Thanks for subscribing to <strong>Lucky's newsletter!</strong> We'll give you a head's up when the platform comes out.</p><p>Please, take a moment to answer our survey. We'd really appreciate it!</p><br/><input name='Email' type='hidden' value='"+emailModels.Email+"' /><label for='Question1'><strong>What do you expect from our company?</strong></label><br /><textarea cols='35' name='Question1' rows='3'></textarea><br /><br /><label for='Question2'><strong>How much would you pay for our services?</strong></label><br /><textarea cols='35' name='Question2' rows='3'></textarea><br /><br /><label for='Question3'><strong>What do you really need?</strong></label><br /><textarea cols='35' name='Question3' rows='3'></textarea><br /><br /><input type='submit' value='Submit survey' />&nbsp;</form></body></html>";
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
-                //587
                 smtp.Port = 587;
-                smtp.Credentials = new System.Net.NetworkCredential("mintchel@gmail.com", "Elsalvador");
+                smtp.Credentials = new System.Net.NetworkCredential("mintchel@gmail.com", "rsguaiyddoaqgdbc");
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
             }
             catch(Exception ex){
                 ViewBag.Title = "Erro.";
                 ViewBag.Message = ex.Message;
+                return View("Subscribe");
             }
             ViewBag.Title = "Thank you!";
             ViewBag.Message = "We'll be contacting you soon! Please take a moment to answer our e-mail survey. ;)";
@@ -121,7 +120,7 @@ namespace DesafioGeoFusion.Controllers
                 ViewBag.Message = ex.Message; 
                 return View("Subscribe");
             }
-            ViewBag.Title = "Survey submitted!";
+            ViewBag.Title = "Survey submitted succesfully!";
             ViewBag.Message = "Thanks for participating on our survey.";
             return View("Subscribe");
         }
