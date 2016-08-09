@@ -35,8 +35,7 @@ namespace DesafioGeoFusion.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Message = ex.Message;
-                return false;
+                throw ex;
             }
 
             return true;
@@ -72,32 +71,34 @@ namespace DesafioGeoFusion.Controllers
             {
                 return View();
             }
-
-            SaveEmail(emailModels.Email);
             
             try
             {
+                SaveEmail(emailModels.Email);
+
                 string url = Request.Url.ToString();
                 url += "Home/EmailResponse";
 
                 MailMessage mail = new MailMessage(){};
                 mail.To.Add(emailModels.Email);
                 mail.From = new MailAddress("Empresa@Teste");
-                mail.Subject = "Nome da empresa ficticia";
+                mail.Subject = "Thank you for subscribing to Lucky's newsletter!";
                 mail.IsBodyHtml = true;
                 mail.Body = "<html><body><form action='"+url+"' method='post' target='_blank'><label>How did you like the movie <strong>Turfnuts</strong>?</label><br /><input name='Email' type='hidden' value='"+emailModels.Email+"' /><label for='Question1'>What do you expect from our company?</label><br /><textarea cols='75' name='Question1' rows='5'></textarea><br /><br /><label for='Question2'>How much would you pay for our services?</label><br /><textarea cols='75' name='Question2' rows='5'></textarea><br /><br /><label for='Question3'>What do you really need?</label><br /><textarea cols='75' name='Question3' rows='5'></textarea><br /><br /><input type='submit' value='Submit your survey.' />&nbsp;</form></body></html>";
                 SmtpClient smtp = new SmtpClient();
                 smtp.Host = "smtp.gmail.com";
+                //587
                 smtp.Port = 587;
                 smtp.Credentials = new System.Net.NetworkCredential("mintchel@gmail.com", "Elsalvador");
                 smtp.EnableSsl = true;
                 smtp.Send(mail);
             }
             catch(Exception ex){
-                ViewBag.Title = "Erro!";
+                ViewBag.Title = "Erro.";
                 ViewBag.Message = ex.Message;
             }
-
+            ViewBag.Title = "Thank you!";
+            ViewBag.Message = "We'll be contacting you soon! Please take a moment to answer our e-mail survey. ;)";
             return View("Subscribe");
         }
 
@@ -110,19 +111,19 @@ namespace DesafioGeoFusion.Controllers
             question2 = Request.Form["Question2"];
             question3 = Request.Form["Question3"];
             email = Request.Form["Email"];
-
-            SaveSurvey(email, question1, question2, question3);
-
-
-            return View("About");
-        }
-
-
-        public ActionResult About()
-        {
-            ViewBag.Message = "Your app description page.";
-
-            return View();
+            try
+            {
+                SaveSurvey(email, question1, question2, question3);
+            }
+            catch(Exception ex)
+            {
+                ViewBag.Title = "Erro.";
+                ViewBag.Message = ex.Message; 
+                return View("Subscribe");
+            }
+            ViewBag.Title = "Survey submitted!";
+            ViewBag.Message = "Thanks for participating on our survey.";
+            return View("Subscribe");
         }
 
     }
