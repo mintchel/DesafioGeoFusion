@@ -118,7 +118,7 @@ namespace DesafioGeoFusion.Controllers
                 ViewBag.Message = ex.Message; 
                 return View("Subscribe");
             }
-            ViewBag.Title = "Survey submitted succesfully!";
+            ViewBag.Title = "Survey submitted successfully!";
             ViewBag.Message = "Thanks for participating on our survey.";
             return View("Subscribe");
         }
