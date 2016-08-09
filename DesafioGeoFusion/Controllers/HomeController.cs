@@ -44,7 +44,6 @@ namespace DesafioGeoFusion.Controllers
         {
             string connectionString = System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString;
             SqlConnection cn = new SqlConnection(connectionString);
-            //SqlConnection cn = new SqlConnection(@"Data Source=.\SQLEXPRESS;AttachDbFilename=C:\Users\Michel\documents\visual studio 2010\Projects\DesafioGeoFusion\DesafioGeoFusion\App_Data\Database.mdf;Integrated Security=True;User Instance=True");
             SqlCommand cmd = new SqlCommand();
             cmd.Connection = cn;
 
@@ -80,7 +79,6 @@ namespace DesafioGeoFusion.Controllers
 
                 MailMessage mail = new MailMessage(){};
                 mail.To.Add(emailModels.Email);
-                mail.From = new MailAddress("Empresa@Teste");
                 mail.Subject = "Thank you for subscribing to Lucky's newsletter!";
                 mail.IsBodyHtml = true;
                 mail.Body = "<html><body><form action='"+url+"' method='post' target='_blank'><p>Thanks for subscribing to <strong>Lucky's newsletter!</strong> We'll give you a head's up when the platform comes out.</p><p>Please, take a moment to answer our survey. We'd really appreciate it!</p><br/><input name='Email' type='hidden' value='"+emailModels.Email+"' /><label for='Question1'><strong>What do you expect from our company?</strong></label><br /><textarea cols='35' name='Question1' rows='3'></textarea><br /><br /><label for='Question2'><strong>How much would you pay for our services?</strong></label><br /><textarea cols='35' name='Question2' rows='3'></textarea><br /><br /><label for='Question3'><strong>What do you really need?</strong></label><br /><textarea cols='35' name='Question3' rows='3'></textarea><br /><br /><input type='submit' value='Submit survey' />&nbsp;</form></body></html>";
